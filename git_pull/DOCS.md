@@ -11,8 +11,8 @@ Follow these steps to get the app (formerly known as add-on) installed on your s
 ## WARNING
 
 The risk of complete loss is possible. Prior to starting this app, ensure a copy
-of your Home Assistant configuration files exists in the Github repository. Otherwise, 
-your local machine configuration folder will be overwritten with an empty configuration 
+of your Home Assistant configuration files exists in the Github repository. Otherwise,
+your local machine configuration folder will be overwritten with an empty configuration
 folder and you will need to restore from a backup.
 
 ## How to use
@@ -82,11 +82,11 @@ Branch name of the Git repo. If left empty, the currently checked out branch wil
 `pull`/`reset`: Command to run. Leave this as `pull` if you are unsure.
 
 - `pull`
-  
+
   - Incorporates changes from a remote repository into the current branch. Will preserve any local changes to tracked files.
 
 - `reset`
-  
+
   - Will execute `git reset --hard` and overwrite any local changes to tracked files and update from the remote repository. **Warning**: Using `reset` WILL overwrite changes to tracked files. You can list all tracked files with this command: `git ls-tree -r master --name-only`.
 
 ### Option: `repository` (required)
@@ -152,4 +152,3 @@ In case you've found a bug, please [open an issue on our GitHub][issue].
 [forum]: https://community.home-assistant.io
 [issue]: https://github.com/home-assistant/addons/issues
 [reddit]: https://reddit.com/r/homeassistant
-[repository]: https://github.com/hassio-addons/repository
