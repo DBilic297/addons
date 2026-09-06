@@ -6,7 +6,7 @@ ENV LANG C.UTF-8
 
 # Setup base
 RUN \
-    apk add --no-cache samba \
+    apk add --no-cache samba wsdd \
     && mkdir -p /var/lib/samba \
     && touch \
         /etc/samba/lmhosts \
@@ -19,3 +19,6 @@ COPY rootfs /
 
 HEALTHCHECK --start-period=3s \
     CMD smbclient -L '\\localhost' -U '%' -m SMB3
+
+ENV \
+    S6_STAGE2_HOOK=/etc/s6-overlay/scripts/enable-check.sh

@@ -32,7 +32,13 @@
    vfs objects = catia fruit streams_xattr
    {{ end }}
 
+   {{ if not .netbios }}
+   smb ports = 445
+   {{ end }}
+
    server signing = {{ .server_signing }}
+
+   kernel oplocks = yes
 
 {{ if (has "config" .enabled_shares) }}
 [config]
@@ -47,11 +53,11 @@
    delete veto files = {{ eq (len .veto_files) 0 | ternary "no" "yes" }}
 {{ end }}
 
-{{ if (has "addons" .enabled_shares) }}
-[addons]
+{{ if or (has "local_apps" .enabled_shares) (has "addons" .enabled_shares) }}
+[local_apps]
    browseable = yes
    writeable = yes
-   path = /addons
+   path = /local_apps
 
    valid users = {{ .username }}
    force user = root
@@ -60,11 +66,39 @@
    delete veto files = {{ eq (len .veto_files) 0 | ternary "no" "yes" }}
 {{ end }}
 
-{{ if (has "addon_configs" .enabled_shares) }}
+{{ if or (has "local_apps" .enabled_shares) (has "addons" .enabled_shares) }}
+[addons]
+   browseable = yes
+   writeable = yes
+   path = /local_apps
+   preexec = /usr/bin/logger -s -t smbd -p local0.warning "%u connected to deprecated share %S from %m (%I), please switch to the local_apps share"
+
+   valid users = {{ .username }}
+   force user = root
+   force group = root
+   veto files = /{{ .veto_files | join "/" }}/
+   delete veto files = {{ eq (len .veto_files) 0 | ternary "no" "yes" }}
+{{ end }}
+
+{{ if or (has "app_configs" .enabled_shares) (has "addon_configs" .enabled_shares) }}
+[app_configs]
+   browseable = yes
+   writeable = yes
+   path = /app_configs
+
+   valid users = {{ .username }}
+   force user = root
+   force group = root
+   veto files = /{{ .veto_files | join "/" }}/
+   delete veto files = {{ eq (len .veto_files) 0 | ternary "no" "yes" }}
+{{ end }}
+
+{{ if or (has "app_configs" .enabled_shares) (has "addon_configs" .enabled_shares) }}
 [addon_configs]
    browseable = yes
    writeable = yes
-   path = /addon_configs
+   path = /app_configs
+   preexec = /usr/bin/logger -s -t smbd -p local0.warning "%u connected to deprecated share %S from %m (%I), please switch to the app_configs share"
 
    valid users = {{ .username }}
    force user = root
@@ -108,6 +142,7 @@
    valid users = {{ .username }}
    force user = root
    force group = root
+   kernel oplocks = no
    veto files = /{{ .veto_files | join "/" }}/
    delete veto files = {{ eq (len .veto_files) 0 | ternary "no" "yes" }}
 {{ end }}
@@ -121,6 +156,7 @@
    valid users = {{ .username }}
    force user = root
    force group = root
+   kernel oplocks = no
    veto files = /{{ .veto_files | join "/" }}/
    delete veto files = {{ eq (len .veto_files) 0 | ternary "no" "yes" }}
 {{ end }}

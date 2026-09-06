@@ -1,5 +1,61 @@
 # Changelog
 
+## 9.2.0
+
+- Update [Matter Server from 1.3.3 to 1.4.0](https://github.com/matter-js/matterjs-server/blob/main/CHANGELOG.md)
+  - Expose Network visualization data to enable external visualization of the networks
+  - Multiple Optimizations and Enhancements in the Server Dashboard
+  - Add support for custom cluster data from WAGO devices
+  - Multiple Optimizations and Fixes in the Matter protocol stack
+
+## 9.1.1
+
+- Update [Matter Server from 1.2.6 to 1.3.3](https://github.com/matter-js/matterjs-server/blob/main/CHANGELOG.md)
+  - Optimizations in the Dashboard for Camera, Time-Synchronization, ICD devices and Thread visualization
+  - Optimizations and fixes for commissioning and operation of the Matter devices
+- Change Matter server panel icon
+
+## 9.1.0
+
+- Update [Matter Server from 1.1.7 to 1.2.6](https://github.com/matter-js/matterjs-server/blob/main/CHANGELOG.md)
+  - Supports Matter 1.6.0
+  - Synchronize Time to devices that support this
+  - Experimental Support for Battery Saving mode of ICD devices
+  - Many Optimizations and Fixes
+- Add `time_sync` option (`auto`/`on`/`off`, default `auto`) to push the current time to Matter devices via the Matter Server's `--enable-time-sync` flag. `auto` enables time sync only when the host clock is NTP synchronized; `on` always enables it (with a warning if NTP is not synchronized); `off` disables it.
+- Add `default_fabric_label` option to pin the fabric label via the Matter Server's `--default-fabric-label` flag. When set, changing the label via the WebSocket API is blocked.
+
+## 9.0.4
+
+- Update [Matter Server from 1.1.2 to 1.1.7](https://github.com/matter-js/matterjs-server/blob/main/CHANGELOG.md#117-2026-07-01) to address reported issues and optimize RAM and CPU usage (a lot)
+
+## 9.0.3
+
+- Update [Matter Server from 1.1.1 to 1.1.2](https://github.com/matter-js/matterjs-server/blob/main/CHANGELOG.md#112-2026-06-25) to address reported issues
+
+## 9.0.2
+
+- Update Matter Server to 1.1.1 with increased Health check timings
+- Speed up Beta version installation
+
+## 9.0.1
+
+- Fixes Heath check with default port settings
+
+## 9.0.0
+
+- **The Matter Server now runs on matter.js. Expect the first start to take noticeably longer while your data migrates automatically — this is normal.**
+  - **⚠️ It is recommended to take a backup before updating.**
+  - **⚠️ If you have enabled the watchdog in HA, please disable for the initial migration to prevent restarts.**
+  - The new matter server needs roughly twice the RAM of the old one, so please check free resources before updating.
+  - The Python Matter Server has been replaced with a matter.js-based implementation (v1.1.0); your data migrates automatically with no action required
+  - Later starts are much faster
+- New Matter Server features:
+  - The web UI dashboard adds Thread and Wi-Fi network visualizations, plus many other improvements
+  - Experimental BLE proxy support via the `ble_proxy` option, for commissioning via BLE proxies from the Matter Server dashboard
+- If you enabled the **Beta** flag for the earlier matter.js beta, it stays on; matter.js is now the default, so you can turn it off — keep it on to keep testing pre-releases
+- For more details, see the [Migration FAQ](https://github.com/home-assistant/addons/blob/master/matter_server/MIGRATION_FAQ.md)
+
 ## 8.5.0
 
 - Add `ble_proxy` option to expose the Matter Server's BLE proxy endpoint, so the Home Assistant Matter integration can drive BLE commissioning through Home Assistant's bluetooth stack (including ESPHome BLE proxies). To actually use this BLE proxy you need Home Assistant 2026.06 or later (the Matter integration support landed there) and the Beta Matter Server (>= 0.7.1, JavaScript-based); mutually exclusive with `bluetooth_adapter_id` (the local adapter is ignored with a warning when `ble_proxy` is enabled).

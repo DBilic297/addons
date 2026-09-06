@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.1.2
+
+- Fix upstream DNS/DNS64 resolution for Thread devices by not binding the upstream DNS resolver socket to the infra interface (fixes #3947, regression since 2.12.0)
+
+## 3.1.1
+
+- Bump beta to OTBR POSIX version d83ddc62 to test ePSKc / Thread 1.4 Credentials Sharing support ahead of the upstream `release-v2026.09.0` tag
+
+## 3.1.0
+
+- Bump to OTBR POSIX version ec16e396 (tag v2026.07.0)
+- Bump beta to OTBR POSIX version 337711e7 (tag v2026.08.0)
+
+## 3.0.2
+
+- Honor the configured `otbr_log_level` for the OTBR web interface (previously always logged at info level)
+- Bump beta to OTBR POSIX version ec16e396 (tag v2026.07.0)
+
 ## 3.0.1
 
 - Backport fix for [CVE-2026-8369](https://github.com/advisories/GHSA-f6vh-g7gh-wh6h) to stable. This only affects users who have enabled NAT64 and use an untrusted network.
